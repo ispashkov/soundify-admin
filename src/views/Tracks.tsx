@@ -1,27 +1,14 @@
 import React, { Component } from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { CHANGE_PAGE_TITLE } from '../constants/actionTypes';
+import Page from '../components/Page';
 
-interface P {
-	changeTitle(): void
-}
-class Tracks extends Component<P, {}> {
-	componentDidMount() {
-		this.props.changeTitle()
-	}
+class Tracks extends Component {
 	render() {
 		return (
-			<div>Tracks View</div>
+			<Page title="Tracks">
+				Tracks View
+			</Page>
 		)
 	}
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-	changeTitle: () => dispatch({
-		type: CHANGE_PAGE_TITLE,
-		payload: "Tracks"
-	})
-})
-
-export default connect(null, mapDispatchToProps)(Tracks)
+export default Tracks

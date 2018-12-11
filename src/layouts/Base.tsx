@@ -5,7 +5,7 @@ import { WithStyles	} from '@material-ui/core'
 import { withStyles, createStyles } from '@material-ui/core/styles'
 import Appbar from '../components/Appbar'
 import Sidebar from '../components/Sidebar'
-import Page from '../components/Page'
+import Content from '../components/Content'
 
 const styles = () => createStyles({
 	root: {
@@ -39,9 +39,9 @@ class BaseLayout extends Component<P, S> {
 				<CssBaseline />
 				<Appbar title={title} onClickMenu={() => this.toggleDrawer(!drawer)} />
 				<Sidebar open={drawer} onClose={() => this.toggleDrawer(false)} />
-				<Page>
+				<Content>
 					{ this.props.children }
-				</Page>
+				</Content>
 			</div>
 		);
   }

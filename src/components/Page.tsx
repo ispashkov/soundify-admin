@@ -1,32 +1,27 @@
-import React from 'react'
-import Paper from '@material-ui/core/Paper'
-import { WithStyles	} from '@material-ui/core'
-import { withStyles, Theme, createStyles } from '@material-ui/core/styles'
+import React, { Component } from 'react'
+import { Dispatch } from 'redux'
+import { connect } from 'react-redux'
+import { CHANGE_PAGE_TITLE } from '../constants/actionTypes';
 
-const styles = (theme: Theme) => createStyles({
-	root: {
-		flex: 1,
-		padding: theme.spacing.unit * 5
-	},
-	paper: {
-		padding: theme.spacing.unit * 3
+interface P {
+	changeTitle(title: string): void,
+	title: string
+}
+class Page extends Component<P, {}> {
+	componentDidMount() {
+		const { title, changeTitle } = this.props
+		changeTitle(title)
 	}
-})
-
-interface P extends WithStyles<typeof styles> {
-	children?: React.ReactNode
-	classes: {
-		root: string,
-		paper: string
+	render() {
+		return this.props.children
 	}
 }
 
-const Page: React.SFC<P> = ({ children, classes }) => (
-	<div className={classes.root}>
-		<Paper className={classes.paper} elevation={1}>
-			{ children }
-		</Paper>
-	</div>
-)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	changeTitle: (title: string) => dispatch({
+		type: CHANGE_PAGE_TITLE,
+		payload: title
+	})
+})
 
-export default withStyles(styles)(Page)
+export default connect(null, mapDispatchToProps)(Page)
