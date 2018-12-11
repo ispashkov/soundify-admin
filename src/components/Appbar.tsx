@@ -6,12 +6,13 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Typography from '@material-ui/core/Typography'
 
 interface P {
+	title: string,
 	onClickMenu(e: React.MouseEvent<HTMLElement>): void
 }
 
 class Appbar extends Component<P> {
 	render() {
-		const { onClickMenu } = this.props
+		const { onClickMenu, title } = this.props
 		
 		return(
 			<AppBar position="static">
@@ -20,7 +21,7 @@ class Appbar extends Component<P> {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" color="inherit">
-						Dashboard
+						{ title }
 					</Typography>
 				</Toolbar>
 			</AppBar>

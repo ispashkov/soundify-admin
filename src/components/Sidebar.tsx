@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React, { Component } from 'react'
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -28,26 +29,41 @@ const menu = [
 
 interface P {
 	open: boolean,
-	onClose(e: React.SyntheticEvent<HTMLElement>): void
+	onClose(e: React.SyntheticEvent<HTMLElement>): void,
+	history: {
+		push: any
+	}
 }
 
-const Sidebar: React.SFC<P> = ({ open, onClose }) => (
-	<Drawer 
-		anchor="left"
-		open={open}
-		onClose={onClose}
-	>
-		<List>
-			{ menu.map((item, idx) => (
-				<ListItem key={idx} button>
-					<ListItemIcon>
-						{ React.createElement(item.icon) }
-					</ListItemIcon>
-					<ListItemText primary={item.label} />
-				</ListItem>
-			))}
-		</List>
-	</Drawer>
-)
+class Sidebar extends Component<P & RouteComponentProps> {
 
-export default Sidebar
+	handleClick = (e: React.SyntheticEvent<HTMLElement>, link: string) => {
+		this.props.history.push(link)
+		this.props.onClose(e)
+	}
+
+	render() {
+		const { open, onClose } = this.props
+
+		return (
+			<Drawer 
+				anchor="left"
+				open={open}
+				onClose={onClose}
+			>
+				<List>
+					{ menu.map((item, idx) => (
+						<ListItem button key={idx} onClick={(e) => this.handleClick(e, item.link)}>
+							<ListItemIcon>
+								{ React.createElement(item.icon) }
+							</ListItemIcon>
+							<ListItemText primary={item.label} />
+						</ListItem>
+					))}
+				</List>
+			</Drawer>
+		)
+	}
+}
+
+export default withRouter(Sidebar)
