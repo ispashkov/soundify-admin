@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import UserIcon from '@material-ui/icons/People';
 import AlbumIcon from '@material-ui/icons/Album';
 import AudioIcon from '@material-ui/icons/Audiotrack';
+import {withStyles, createStyles, WithStyles, Theme} from '@material-ui/core/styles'
+import {ThemeOptions} from "@material-ui/core/styles/createMuiTheme";
 
 const menu = [
   {
@@ -27,11 +29,25 @@ const menu = [
   }
 ];
 
-interface P {
+const styles = (theme: Theme & ThemeOptions) => createStyles({
+  root: {
+    width: theme.drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: theme.drawerWidth,
+  },
+});
+
+interface P extends WithStyles<typeof styles> {
   open: boolean,
   onClose(e: React.SyntheticEvent<HTMLElement>): void,
   history: {
     push: any
+  },
+  classes: {
+    root: string,
+    drawerPaper: string
   }
 }
 
@@ -39,17 +55,22 @@ class Sidebar extends Component<P & RouteComponentProps> {
 
   handleClick = (e: React.SyntheticEvent<HTMLElement>, link: string) => {
     this.props.history.push(link)
-    this.props.onClose(e)
+    // this.props.onClose(e)
   };
 
   render() {
-    const { open, onClose } = this.props;
+    const { open, onClose, classes } = this.props;
 
     return (
       <Drawer
         anchor="left"
+        variant={"persistent"}
         open={open}
         onClose={onClose}
+        className={classes.root}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
       >
         <List>
           { menu.map((item, idx) => (
@@ -66,4 +87,4 @@ class Sidebar extends Component<P & RouteComponentProps> {
   }
 }
 
-export default withRouter(Sidebar)
+export default withStyles(styles)(withRouter(Sidebar))

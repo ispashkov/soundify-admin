@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { WithStyles	} from '@material-ui/core'
-import { withStyles, createStyles } from '@material-ui/core/styles'
+import { withStyles, createStyles, WithStyles } from '@material-ui/core/styles'
 import Appbar from '../components/Appbar'
 import Sidebar from '../components/Sidebar'
 import Content from '../components/Content'
@@ -37,9 +36,9 @@ class BaseLayout extends Component<P, S> {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Appbar title={title} onClickMenu={() => this.toggleDrawer(!drawer)} />
+        <Appbar title={title} open={drawer} onClickMenu={() => this.toggleDrawer(!drawer)} />
         <Sidebar open={drawer} onClose={() => this.toggleDrawer(false)} />
-        <Content>
+        <Content open={drawer}>
           { this.props.children }
         </Content>
       </div>
