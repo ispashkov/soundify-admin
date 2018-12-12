@@ -6,5 +6,5 @@ const rootEl = document.getElementById('root') as HTMLElement;
 ReactDOM.render(<App />, rootEl);
 
 if (module.hot) {
-	module.hot.accept()
+  module.hot.accept()
 }
