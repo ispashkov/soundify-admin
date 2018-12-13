@@ -6,8 +6,11 @@ import store from './store';
 import { MuiThemeProvider } from '@material-ui/core'
 import theme from './theme';
 
+import * as routes from './constants/routes';
+
 import LayoutBase from './containers/BaseLayout';
-import Artists from './views/Artists';
+import ArtistsListContainer from './containers/ArtistsList';
+import ArtistsCreateContainer from './containers/ArtistsCreate';
 import Albums from './views/Albums';
 import Tracks from './views/Tracks';
 
@@ -17,7 +20,8 @@ const App: React.FunctionComponent<{}> = () => (
       <Router>
         <Switch>
           <LayoutBase>
-            <Route path="/artists" component={Artists} />
+            <Route path={routes.ARTISTS_LIST} component={ArtistsListContainer} exact />
+            <Route path={routes.ARTISTS_CREATE} component={ArtistsCreateContainer} />
             <Route path="/albums" component={Albums} />
             <Route path="/tracks" component={Tracks} />
           </LayoutBase>

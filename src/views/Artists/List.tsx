@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,7 +12,8 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import {withStyles, Theme, createStyles, WithStyles} from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import Page from '../containers/Page';
+import Page from '../../containers/Page';
+import * as routes from "../../constants/routes";
 
 const styles = (theme: Theme) => createStyles({
   grid: {
@@ -68,10 +70,17 @@ interface P extends WithStyles<typeof styles> {
     searchIcon: string,
     inputRoot: string,
     inputInput: string
-  }
+  },
+  getArtists(): void
 }
 
+const CreateLink = (props: any) => <Link to={routes.ARTISTS_CREATE} {...props}/>
+
 class Artists extends Component<P> {
+  componentDidMount(): void {
+    this.props.getArtists()
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -80,7 +89,13 @@ class Artists extends Component<P> {
 
         <Grid container spacing={16} className={classes.grid}>
           <Grid item xs={8} container alignItems="center">
-            <Button variant="contained" color="primary" aria-label="Create" size="large">
+            <Button
+              component={CreateLink}
+              variant="contained"
+              color="primary"
+              aria-label="Create"
+              size="large"
+            >
               <AddIcon/>
               Create
             </Button>

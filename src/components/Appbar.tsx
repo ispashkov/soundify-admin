@@ -46,9 +46,11 @@ class Appbar extends Component<P> {
           [classes.appBarShift]: open,
         })}>
         <Toolbar>
-          <IconButton color="inherit" aria-label="Menu" onClick={onClickMenu}>
-            <MenuIcon />
-          </IconButton>
+          { !open && (
+            <IconButton color="inherit" aria-label="Menu" onClick={onClickMenu}>
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" color="inherit">
             { title }
           </Typography>

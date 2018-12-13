@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,6 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import UserIcon from '@material-ui/icons/People';
 import AlbumIcon from '@material-ui/icons/Album';
 import AudioIcon from '@material-ui/icons/Audiotrack';
+import IconButton from '@material-ui/core/IconButton';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Divider from '@material-ui/core/Divider';
 import {withStyles, createStyles, WithStyles, Theme} from '@material-ui/core/styles'
 import {ThemeOptions} from "@material-ui/core/styles/createMuiTheme";
 
@@ -37,54 +40,59 @@ const styles = (theme: Theme & ThemeOptions) => createStyles({
   drawerPaper: {
     width: theme.drawerWidth,
   },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+  link: {
+    textDecoration: 'none'
+  }
 });
 
 interface P extends WithStyles<typeof styles> {
   open: boolean,
   onClose(e: React.SyntheticEvent<HTMLElement>): void,
-  history: {
-    push: any
-  },
   classes: {
     root: string,
-    drawerPaper: string
+    drawerPaper: string,
+    drawerHeader: string,
+    link: string
   }
 }
 
-class Sidebar extends Component<P & RouteComponentProps> {
+const Sidebar: React.FunctionComponent<P> = ({ open, onClose, classes }) => (
+  <Drawer
+    anchor="left"
+    variant={"persistent"}
+    open={open}
+    onClose={onClose}
+    className={classes.root}
+    classes={{
+      paper: classes.drawerPaper,
+    }}
+  >
+    <div className={classes.drawerHeader}>
+      <IconButton onClick={onClose}>
+        <ChevronLeftIcon />
+      </IconButton>
+    </div>
+    <Divider />
+    <List>
+      { menu.map((item, idx) => (
+        <Link to={item.link} key={idx} className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              { React.createElement(item.icon) }
+            </ListItemIcon>
+            <ListItemText primary={item.label} />
+          </ListItem>
+        </Link>
+      ))}
+    </List>
+  </Drawer>
+);
 
-  handleClick = (e: React.SyntheticEvent<HTMLElement>, link: string) => {
-    this.props.history.push(link)
-    // this.props.onClose(e)
-  };
-
-  render() {
-    const { open, onClose, classes } = this.props;
-
-    return (
-      <Drawer
-        anchor="left"
-        variant={"persistent"}
-        open={open}
-        onClose={onClose}
-        className={classes.root}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <List>
-          { menu.map((item, idx) => (
-            <ListItem button key={idx} onClick={(e) => this.handleClick(e, item.link)}>
-              <ListItemIcon>
-                { React.createElement(item.icon) }
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    )
-  }
-}
-
-export default withStyles(styles)(withRouter(Sidebar))
+export default withStyles(styles)(Sidebar)
