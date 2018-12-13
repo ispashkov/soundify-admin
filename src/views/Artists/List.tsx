@@ -10,7 +10,6 @@ import Button, {ButtonProps} from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import {withStyles, Theme, createStyles, WithStyles} from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Page from '../../containers/Page';
@@ -61,13 +60,6 @@ const styles = (theme: Theme) => createStyles({
         width: 200,
       },
     },
-  },
-  loadingContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    height: theme.spacing.unit * 50
   }
 });
 
@@ -83,8 +75,7 @@ interface P extends WithStyles<typeof styles> {
     search: string,
     searchIcon: string,
     inputRoot: string,
-    inputInput: string,
-    loadingContainer: string
+    inputInput: string
   },
   getArtists(): void,
   artists: Artist[],
@@ -102,7 +93,7 @@ class Artists extends Component<P> {
     const { classes, artists, isLoading } = this.props;
 
     return (
-      <Page title="Artists">
+      <Page title="Artists" isLoading={isLoading}>
 
         <Grid container spacing={16} className={classes.grid}>
           <Grid item xs={8} container alignItems="center">
@@ -132,11 +123,6 @@ class Artists extends Component<P> {
             </div>
           </Grid>
         </Grid>
-        { isLoading && (
-          <div className={classes.loadingContainer}>
-            <CircularProgress/>
-          </div>
-        ) }
         { !isLoading && (
           <Table>
             <TableHead>

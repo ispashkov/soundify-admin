@@ -7,6 +7,8 @@ import Content from '../components/Content'
 
 const styles = () => createStyles({
   root: {
+    display: "flex",
+    flexDirection: "column",
     minHeight: '100vh'
   }
 });

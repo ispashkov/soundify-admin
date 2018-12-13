@@ -6,6 +6,8 @@ import {ThemeOptions} from "@material-ui/core/styles/createMuiTheme";
 
 const styles = (theme: Theme & ThemeOptions) => createStyles({
   content: {
+    display: "flex",
+    flexDirection: "column",
     flexGrow: 1,
     padding: theme.spacing.unit * 5,
     transition: theme.transitions.create('margin', {

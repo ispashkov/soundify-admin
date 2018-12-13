@@ -11,10 +11,12 @@ export default () => async (dispatch: Dispatch) => {
 
     const { data: { data} } = await http.get('/artists');
 
-    dispatch({
-      type: FETCH_ARTISTS_SUCCESS,
-      payload: data
-    });
+    setTimeout(() => {
+      dispatch({
+        type: FETCH_ARTISTS_SUCCESS,
+        payload: data
+      });
+    }, 1000)
   } catch (e) {
     dispatch({
       type: FETCH_ARTISTS_FAIL,
