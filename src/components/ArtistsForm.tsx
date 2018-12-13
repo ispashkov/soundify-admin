@@ -26,7 +26,7 @@ const ArtistsForm: React.FunctionComponent<P> = ({ userName, email, password, on
       <Grid item xs={12}>
         <TextField
           label="Name"
-          name="name"
+          name="userName"
           placeholder="Name"
           defaultValue={userName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}

@@ -10,6 +10,7 @@ import Button, {ButtonProps} from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {withStyles, Theme, createStyles, WithStyles} from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Page from '../../containers/Page';
@@ -60,12 +61,19 @@ const styles = (theme: Theme) => createStyles({
         width: 200,
       },
     },
+  },
+  loadingContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: theme.spacing.unit * 50
   }
 });
 
 interface Artist {
   _id: string,
-  name: string,
+  userName: string,
   email: string
 }
 
@@ -75,10 +83,12 @@ interface P extends WithStyles<typeof styles> {
     search: string,
     searchIcon: string,
     inputRoot: string,
-    inputInput: string
+    inputInput: string,
+    loadingContainer: string
   },
   getArtists(): void,
-  artists: Artist[]
+  artists: Artist[],
+  isLoading: boolean
 }
 
 const CreateLink: React.FunctionComponent<ButtonProps> = (props: any) => <Link to={routes.ARTISTS_CREATE} {...props}/>;
@@ -89,7 +99,7 @@ class Artists extends Component<P> {
   }
 
   render() {
-    const { classes, artists } = this.props;
+    const { classes, artists, isLoading } = this.props;
 
     return (
       <Page title="Artists">
@@ -122,22 +132,30 @@ class Artists extends Component<P> {
             </div>
           </Grid>
         </Grid>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>NAME</TableCell>
-              <TableCell>EMAIL</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            { artists.map((artist, idx) => (
-              <TableRow key={idx}>
-                <TableCell>{ artist.name || ("—") }</TableCell>
-                <TableCell>{ artist.email || ("—") }</TableCell>
+        { isLoading && (
+          <div className={classes.loadingContainer}>
+            <CircularProgress/>
+          </div>
+        ) }
+        { !isLoading && (
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>NAME</TableCell>
+                <TableCell>EMAIL</TableCell>
               </TableRow>
-            )) }
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              { artists.map((artist, idx) => (
+                <TableRow key={idx}>
+                  <TableCell>{ artist.userName || ("—") }</TableCell>
+                  <TableCell>{ artist.email || ("—") }</TableCell>
+                </TableRow>
+              )) }
+            </TableBody>
+          </Table>
+        )}
+
       </Page>
     )
   }

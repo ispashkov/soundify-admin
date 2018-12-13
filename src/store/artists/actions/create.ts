@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
+import { push } from "connected-react-router";
 import http from "../../../utils/http";
 import {CREATE_ARTIST_FAIL, CREATE_ARTIST_START, CREATE_ARTIST_SUCCESS} from "../types";
+import * as routes from "../../../constants/routes";
 
 export interface userData {
   email: string,
@@ -19,6 +21,7 @@ export default (data: userData) => async (dispatch: Dispatch) => {
     dispatch({
       type: CREATE_ARTIST_SUCCESS,
     });
+    dispatch(push(routes.ARTISTS_LIST))
   } catch (e) {
     dispatch({
       type: CREATE_ARTIST_FAIL,

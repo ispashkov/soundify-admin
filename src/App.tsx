@@ -1,6 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ConnectedRouter as Router } from 'connected-react-router';
+import { Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import history from "./utils/history";
 import store from './store';
 
 import { MuiThemeProvider } from '@material-ui/core'
@@ -17,7 +19,7 @@ import Tracks from './views/Tracks';
 const App: React.FunctionComponent<{}> = () => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <Router>
+      <Router history={history}>
         <Switch>
           <LayoutBase>
             <Route path={routes.ARTISTS_LIST} component={ArtistsListContainer} exact />
