@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Page from '../components/Page';
-import { CHANGE_PAGE_TITLE } from '../constants/actionTypes';
+import { CHANGE_PAGE_TITLE } from '../store/layout/types';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   changeTitle: (title: string) => dispatch({

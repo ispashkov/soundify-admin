@@ -1,10 +1,16 @@
 import { connect } from "react-redux";
 import {Dispatch, bindActionCreators } from "redux";
-import Artists from "../views/Artists/List";
-import actions from "../actions/artists";
+import ArtistsList from "../views/Artists/List";
+import { getArtists } from "../store/artists/actions";
+import {ApplicationState} from "../store/rootReducer";
+
+
+const mapStateToProps = (state: ApplicationState) => ({
+  artists: state.artists.items
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-  ...actions
+  getArtists
 }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Artists)
+export default connect(mapStateToProps, mapDispatchToProps)(ArtistsList)

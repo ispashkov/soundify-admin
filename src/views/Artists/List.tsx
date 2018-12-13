@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
+import Button, {ButtonProps} from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
@@ -63,6 +63,12 @@ const styles = (theme: Theme) => createStyles({
   }
 });
 
+interface Artist {
+  _id: string,
+  name: string,
+  email: string
+}
+
 interface P extends WithStyles<typeof styles> {
   classes: {
     grid: string,
@@ -71,10 +77,11 @@ interface P extends WithStyles<typeof styles> {
     inputRoot: string,
     inputInput: string
   },
-  getArtists(): void
+  getArtists(): void,
+  artists: Artist[]
 }
 
-const CreateLink = (props: any) => <Link to={routes.ARTISTS_CREATE} {...props}/>
+const CreateLink: React.FunctionComponent<ButtonProps> = (props: any) => <Link to={routes.ARTISTS_CREATE} {...props}/>;
 
 class Artists extends Component<P> {
   componentDidMount(): void {
@@ -82,7 +89,7 @@ class Artists extends Component<P> {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, artists } = this.props;
 
     return (
       <Page title="Artists">
@@ -115,19 +122,20 @@ class Artists extends Component<P> {
             </div>
           </Grid>
         </Grid>
-
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Name</TableCell>
+              <TableCell>NAME</TableCell>
+              <TableCell>EMAIL</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell></TableCell>
-            </TableRow>
+            { artists.map((artist, idx) => (
+              <TableRow key={idx}>
+                <TableCell>{ artist.name || ("—") }</TableCell>
+                <TableCell>{ artist.email || ("—") }</TableCell>
+              </TableRow>
+            )) }
           </TableBody>
         </Table>
       </Page>

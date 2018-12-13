@@ -1,4 +1,10 @@
-import { connect} from "react-redux";
+import { connect } from "react-redux";
+import { Dispatch, bindActionCreators } from "redux";
 import ArtistsCreate from "../views/Artists/Create";
+import { createArtist } from "../store/artists/actions";
 
-export default connect()(ArtistsCreate);
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+  createArtist
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(ArtistsCreate);
