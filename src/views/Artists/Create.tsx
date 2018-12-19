@@ -6,6 +6,7 @@ import Page from "../../containers/Page";
 import Form from "../../components/ArtistsForm";
 import * as routes from "../../constants/routes";
 import roles from "../../constants/roles";
+import { ArtistData } from "../../interfaces";
 
 const styles = (theme: Theme) => createStyles({
   root: {
@@ -26,18 +27,11 @@ interface P extends WithStyles<typeof styles>{
     root: string,
     btnCancel: string
   },
-  createArtist(fields: artistData): void
-}
-
-interface artistData {
-  userName: string,
-  email: string,
-  password: string,
-  role: number
+  createArtist(fields: ArtistData): void
 }
 
 interface S {
-  fields: artistData
+  fields: ArtistData
 }
 
 class ArtistCreate extends Component<P, S> {

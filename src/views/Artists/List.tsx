@@ -14,6 +14,7 @@ import {withStyles, Theme, createStyles, WithStyles} from '@material-ui/core/sty
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Page from '../../containers/Page';
 import * as routes from "../../constants/routes";
+import {fetchArtists} from "../../store/artists/actions";
 
 const styles = (theme: Theme) => createStyles({
   grid: {
@@ -77,7 +78,7 @@ interface P extends WithStyles<typeof styles> {
     inputRoot: string,
     inputInput: string
   },
-  getArtists(): void,
+  fetchArtists(): void,
   artists: Artist[],
   isLoading: boolean
 }
@@ -86,7 +87,7 @@ const CreateLink: React.FunctionComponent<ButtonProps> = (props: any) => <Link t
 
 class Artists extends Component<P> {
   componentDidMount(): void {
-    this.props.getArtists()
+    this.props.fetchArtists()
   }
 
   render() {

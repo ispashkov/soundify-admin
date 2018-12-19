@@ -1,4 +1,4 @@
-import { FETCH_ARTISTS_START, FETCH_ARTISTS_SUCCESS, FETCH_ARTISTS_FAIL}  from "./types"
+import { FETCH_ARTISTS, FETCH_ARTISTS_SUCCESS, FETCH_ARTISTS_FAIL}  from "./types"
 
 export interface ArtistsInterface {
   items: [],
@@ -13,13 +13,13 @@ const initialState: ArtistsInterface = {
 };
 
 type Action = {
-  type: FETCH_ARTISTS_START | FETCH_ARTISTS_SUCCESS | FETCH_ARTISTS_FAIL,
+  type: FETCH_ARTISTS | FETCH_ARTISTS_SUCCESS | FETCH_ARTISTS_FAIL,
   payload: any
 }
 
 export default (state = initialState, { type, payload }: Action): ArtistsInterface => {
   switch (type) {
-    case FETCH_ARTISTS_START:
+    case FETCH_ARTISTS:
       return {
         ...state,
         isLoading: true
@@ -32,7 +32,6 @@ export default (state = initialState, { type, payload }: Action): ArtistsInterfa
         errors: []
       };
     case FETCH_ARTISTS_FAIL:
-      console.log(payload)
       return {
         ...state,
         isLoading: false,
