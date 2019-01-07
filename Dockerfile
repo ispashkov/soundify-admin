@@ -1,5 +1,11 @@
-FROM node:latest
+FROM node:latest as build-stage
 WORKDIR /app
-COPY . ./
+COPY package*.json ./
 RUN yarn
-CMD ["yarn", "start"]
+COPY . .
+RUN yarn build
+
+FROM nginx:1.13.12-alpine as production-stage
+COPY --from=build-stage /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
