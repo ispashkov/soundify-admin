@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import classNames from "classnames";
 import {Link} from "react-router-dom";
 import Button, {ButtonProps} from "@material-ui/core/Button";
 import {withStyles, WithStyles, Theme, createStyles} from "@material-ui/core/styles";
@@ -13,6 +14,11 @@ const styles = (theme: Theme) => createStyles({
     maxWidth: 600,
     margin: "0 auto"
   },
+  rootLoadable: {
+    display: "flex",
+    alignItems: "center",
+    flex: "1 0 100%"
+  },
   btnCancel: {
     marginRight: theme.spacing.unit * 2
   }
@@ -25,9 +31,11 @@ const CancelLink: React.FunctionComponent<ButtonProps> = (props: any) => (
 interface P extends WithStyles<typeof styles>{
   classes: {
     root: string,
+    rootLoadable: string,
     btnCancel: string
   },
-  createArtist(fields: ArtistData): void
+  createArtist(fields: ArtistData): void,
+  isLoading: boolean
 }
 
 interface S {
@@ -66,11 +74,15 @@ class ArtistCreate extends Component<P, S> {
 
   render() {
     const { fields } = this.state;
-    const { classes } = this.props;
+    const { classes, isLoading } = this.props;
+
+    console.log(isLoading);
 
     return (
-      <div className={classes.root}>
-        <Page title="Create Artist">
+      <div className={classNames(classes.root, {
+        [classes.rootLoadable]: isLoading
+      })}>
+        <Page title="Create Artist" isLoading={isLoading}>
           <Form {...fields} onChange={this.handleChange} onSubmit={this.handleSubmit}>
             <Button
               className={classes.btnCancel}
